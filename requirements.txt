@@ -2,4 +2,4 @@ openai
 streamlit
 langchain
 urllib3==1.26.6
-dotenv
+python-dotenv==1.0.0
