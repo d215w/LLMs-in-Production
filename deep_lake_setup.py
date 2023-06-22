@@ -27,7 +27,8 @@ my_activeloop_org_id = 'nbeaudoin'
 my_activeloop_dataset_name = 'langchain_course_zero_to_hero'
 dataset_path =f'hub://{my_activeloop_org_id}/{my_activeloop_dataset_name}'
 db = DeepLake(dataset_path=dataset_path,
-              embedding_function=embeddings)
+              embedding_function=embeddings,
+              token=ACTIVELOOP_TOKEN)
 
 # add documents to Deep Lake dataset
 db.add_documents(docs)
