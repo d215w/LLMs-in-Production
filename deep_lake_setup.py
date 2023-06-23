@@ -5,6 +5,8 @@ from langchain.vectorstores import DeepLake
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.llms import OpenAI
 from langchain.chains import RetrievalQA
+from langchain.agents import initialize_agent, Tool
+from langchain.agents import AgentType
 
 load_dotenv()  # take environment variables from .env.
 ACTIVELOOP_TOKEN = os.getenv("ACTIVELOOP_API_KEY")
@@ -32,3 +34,30 @@ db = DeepLake(dataset_path=dataset_path,
 
 # add documents to Deep Lake dataset
 db.add_documents(docs)
+
+# Create our retrieval chain
+retrieval_qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type='stuff',
+    retriever=db.as_retriever()
+)
+
+# Create the agent
+tools = [
+    Tool(
+        name='Retrieval QA System',
+        func=retrieval_qa.run,
+        description='Useful for answering questions.'
+    ),
+]
+
+agent = initialize_agent(
+    tools,
+    llm,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True
+)
+
+# Ask the agent a question
+response = agent.run('When was Napoleone born?')
+print(response)

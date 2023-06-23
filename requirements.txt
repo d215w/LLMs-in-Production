@@ -4,3 +4,4 @@ langchain
 urllib3==1.26.6
 python-dotenv==1.0.0
 deeplake
+tiktoken
