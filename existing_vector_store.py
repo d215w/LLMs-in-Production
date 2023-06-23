@@ -8,6 +8,7 @@ from langchain.chains import RetrievalQA
 from langchain.agents import initialize_agent, Tool
 from langchain.agents import AgentType
 
+# load credentials
 load_dotenv()  # take environment variables from .env.
 ACTIVELOOP_TOKEN = os.getenv("ACTIVELOOP_API_KEY")
 
@@ -15,3 +16,53 @@ ACTIVELOOP_TOKEN = os.getenv("ACTIVELOOP_API_KEY")
 llm = OpenAI(model='text-davinci-003', temperature=0)
 embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 
+
+# create Deep Lake dataset
+my_activeloop_org_id = 'nbeaudoin'
+my_activeloop_dataset_name = 'langchain_course_zero_to_hero'
+dataset_path =f'hub://{my_activeloop_org_id}/{my_activeloop_dataset_name}'
+db = DeepLake(dataset_path=dataset_path,
+              embedding_function=embeddings,
+              token=ACTIVELOOP_TOKEN)
+
+# create new documents
+texts = [
+    'Lady Gaga was born in 20 March 1986',
+    'Michael Jeffrey Jordan was born in 17 February 1963'
+]
+
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+docs = text_splitter.create_documents(texts)
+
+# add docs to vector DB
+db.add_documents(docs)
+
+# instantiate wrapper for GPT3
+llm = OpenAI(model='text-davinci-003', temperature=0)
+
+# create retriever from the db
+retrieval_qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type='stuff',
+    retriever=db.as_retriever()
+)
+
+# instantiate a tool that uses the retriever
+tools = [
+    Tool(
+        name='Retrieval QA System',
+        func=retrieval_qa.run,
+        description='Useful for answering questions.'
+    ),
+]
+
+# create an agent that uses the tool
+agent = initialize_agent(
+    tools,
+    llm,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True
+)
+
+response = agent.run('When was Michael Jordan born?')
+print(response)
