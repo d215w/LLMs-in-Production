@@ -7,7 +7,7 @@ load_dotenv()  # take environment variables from .env.
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # define model
-llm = OpenAI(model="text-davini-003")
+llm = OpenAI(model="text-davinci-003")
 
 # define input text
 input_text = "you_long_input_text"
