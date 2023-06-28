@@ -6,3 +6,4 @@ python-dotenv==1.0.0
 deeplake
 tiktoken
 google-api-python-client
+huggingface_hub
