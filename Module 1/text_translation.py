@@ -12,15 +12,14 @@ llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
 # define template for translation
 translation_template = "Translate the following text from {source_language} to {target_language}: {text}"
-translation_prompt = PromptTemplate(input_variables=["text"],
-                                      template=translation_template)
+translation_prompt = PromptTemplate(input_variables=["source_language", "target_language", "text"], template=translation_template)
+
 translation_chain = LLMChain(llm=llm, prompt=translation_prompt)
 
 source_language = "English"
-target_language = "French"
+target_language = "Chinese"
 
 text = "LangChain provides many modules that can be used to build language model applications."
-
 
 translated_text = translation_chain.predict(source_language=source_language,
                                            target_language=target_language,
