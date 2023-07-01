@@ -1,6 +1,6 @@
 openai
 streamlit
-langchain
+langchain==0.0.208
 urllib3==1.26.6
 python-dotenv==1.0.0
 deeplake
