@@ -7,3 +7,5 @@ deeplake
 tiktoken
 google-api-python-client
 huggingface_hub
+requests
+newspaper3k==0.2.8
