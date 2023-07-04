@@ -4,6 +4,7 @@ import json
 import requests
 from newspaper import Article
 from langchain.schema import HumanMessage
+from langchain.chat_models import ChatOpenAI
 
 ### Create web scrape
 headers = {
@@ -59,3 +60,10 @@ Write a summary of the previous article.
 prompt = template.format(article_title=article.title, article_text=article.text)
 
 messages = [HumanMessage(content=prompt)]
+
+# load the model
+chat = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+
+# generate summary
+summary = chat(messages)
+print(summary.content)
