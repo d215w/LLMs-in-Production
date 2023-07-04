@@ -25,4 +25,5 @@ messages.append(prompt)
 
 llm = ChatOpenAI(model_name="gpt-3.5-turbo")
 
-reponse = llm(messages)
+response = llm(messages)
+print(response)
