@@ -10,3 +10,4 @@ huggingface_hub
 requests
 newspaper3k==0.2.8
 sentencepiece
+tqdm
