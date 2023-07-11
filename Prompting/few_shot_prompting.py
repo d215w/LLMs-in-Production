@@ -1,4 +1,4 @@
-from langchain import PromptTemplate, FewShotPromptTemplate
+from langchain import PromptTemplate, FewShotPromptTemplate, LLMChain
 from langchain.llms import OpenAI
 from dotenv import load_dotenv
 import os
@@ -31,7 +31,7 @@ few_shot_prompt = FewShotPromptTemplate(
     prefix="Here are some examples of colors and the emotion associated with them:\n\n",
     suffix="\n\nNow, given a new color, identify the emotion associated with it:\n\nColor: {input}\nEmotion:",
     input_variables=["input"],
-    example_seperator="\n",
+    example_separator="\n",
 )
 
 formatted_prompt = few_shot_prompt.format(input="purple")
