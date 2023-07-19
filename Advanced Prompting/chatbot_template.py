@@ -27,4 +27,6 @@ chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt,
                                                 example_ai,
                                                 human_message_prompt])
 chain = LLMChain(llm=chat, prompt=chat_prompt)
-chain.run("I love programming.")
+response = chain.run("I love programming.")
+
+print(response)
