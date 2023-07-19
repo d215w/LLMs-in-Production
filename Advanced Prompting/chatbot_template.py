@@ -1,6 +1,3 @@
-from dotenv import load_dotenv
-import os
-
 from langchain.chat_models import ChatOpenAI
 from langchain import LLMChain
 from langchain.prompts.chat import(
@@ -9,7 +6,9 @@ from langchain.prompts.chat import(
     AIMessagePromptTemplate,
     HumanMessagePromptTemplate,
 )
-    
+from dotenv import load_dotenv
+import os
+
 # Load the OpenAI key
 load_dotenv()  # take environment variables from .env.
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
