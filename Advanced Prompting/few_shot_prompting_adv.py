@@ -25,3 +25,30 @@ example_prompt = PromptTemplate(
     input_variables=["query", "answer"],
     template=example_template
 )
+
+# break up the previous prompt
+prefix = """The following are excerpts from conversations with an AI
+assistant. The assistant is known for its humor and wit, providing
+entertaining and amusing responses to users' questions. Here are some
+examples:
+"""
+
+# and the suffic our user inut and output indicator
+suffix = """
+User: {query}
+AI: """
+
+# now creat ethe few-shot prompt template
+few_shot_prompt_template = FewShotPromptTemplate(
+    examples=examples,
+    example_prompt=example_prompt,
+    prefix=prefix,
+    suffix=suffix,
+    input_variables=["query"],
+    example_separator="\n\n"
+)
+
+# pass te example and user query
+chain = LLMChain(llm=llm, prompt=few_shot_prompt_template)
+results = chain.run("What's the secret to happiness?")
+print(results)
