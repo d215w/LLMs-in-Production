@@ -15,4 +15,13 @@ examples = [
 ]
 
 # create an example template
-example_template
+example_template = """
+User: {query}
+AI: {answer}
+"""
+
+# create a prompt example from above template
+example_prompt = PromptTemplate(
+    input_variables=["query", "answer"],
+    template=example_template
+)
