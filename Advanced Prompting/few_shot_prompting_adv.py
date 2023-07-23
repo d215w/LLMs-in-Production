@@ -46,7 +46,7 @@ suffix = """
 User: {query}
 AI: """
 
-# now creat ethe few-shot prompt template
+# now create the few-shot prompt template
 few_shot_prompt_template = FewShotPromptTemplate(
     examples=examples,
     example_prompt=example_prompt,
